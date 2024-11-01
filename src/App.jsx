@@ -3,13 +3,17 @@ import Header from "./components/Header";
 import Global from "./styles/Global";
 // import Home from "./pages/Home";
 import Footer from "./components/Footer";
-import Imobi from "./pages/Imobi";
+// import Login from "./pages/Login";
+import Cadastro from "./pages/Cadastro";
+// import Imobi from "./pages/Imobi";
 
 function App() {
   return (
     <div>   
         <Header/>
-        <Imobi/>
+        <Cadastro/>
+        {/* <Login/> */}
+        {/* <Imobi/> */}
         {/* <Banner/>
         <Home/> */}
         <Footer/>

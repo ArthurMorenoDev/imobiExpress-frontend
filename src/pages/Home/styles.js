@@ -13,5 +13,4 @@ export const Wrapper = styled.div`
     align-items: center;
     flex-wrap: wrap;
     padding: 25px 150px;
-
 `

@@ -1,16 +1,17 @@
-import React, { Fragment} from "react";
+import React from "react";
 import LogoImg from "../../assets/LogoImg.png";
 import { Container, Menu, Logo} from "./styles";
+import { Link } from "react-router-dom";
 
 const Header = ()=>{
     return(
         <Container>
             <Logo>
-                <img src={LogoImg} alt=""/>
+                <Link to='/'><img src={LogoImg} alt=""/></Link>
             </Logo>
             <Menu>
                 <ul>
-                    <li><span>Cadastro/Login</span></li>
+                   <Link to ='/login'><li><span>Cadastro/Login</span></li></Link>
                 </ul>
             </Menu>
         </Container>

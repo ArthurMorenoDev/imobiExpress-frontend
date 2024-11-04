@@ -1,24 +1,13 @@
-import Header from "./components/Header";
-// import Banner from "./components/Banner";
+import { Fragment } from "react";
 import Global from "./styles/Global";
-// import Home from "./pages/Home";
-import Footer from "./components/Footer";
-// import Login from "./pages/Login";
-import Cadastro from "./pages/Cadastro";
-// import Imobi from "./pages/Imobi";
+import RouterApp from "./routes";
 
 function App() {
   return (
-    <div>   
-        <Header/>
-        <Cadastro/>
-        {/* <Login/> */}
-        {/* <Imobi/> */}
-        {/* <Banner/>
-        <Home/> */}
-        <Footer/>
+    <Fragment>   
+      <RouterApp/>
         <Global/>
-    </div>
+    </Fragment>
   );
 }
 

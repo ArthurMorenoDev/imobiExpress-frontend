@@ -19,7 +19,7 @@ export const ContainerForm = styled.div`
     width: 370px;
     background-color: var(--white);
 `
-export const Form = styled.div`
+export const Form = styled.form`
     width: 100%;
 
 `

@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Container, ContainerForm, Label, Form } from "./styles";
 import Input from "../../components/Input";
 import Button from "../../components/Button";
+import { toast } from "react-toastify";
 
 const Cadastro = () => {
   const [data, setData] = useState({
@@ -19,12 +20,16 @@ const Cadastro = () => {
     e.preventDefault();
     Api.post("/createusers", data)
       .then((response) => {
-        console.log(response);
+        if (!response.data.error === true) {
+          toast(response.data.message);
+        } else {
+          toast(response.data.message);
+        }
       })
       .catch(() => {
         console.log("error: erro no sistema");
       });
-    console.log(data);
+    // console.log(data);
   };
 
   return (

@@ -5,42 +5,51 @@ import { getLocalStorage, setLocalStorage } from "./utils";
 
 export const AppContext = createContext({});
 
-export const AppContextProvider = ({children})=> {
-    const [user, setUser] = useState();
+export const AppContextProvider = ({ children }) => {
+    const [user, setUser] = useState(null);
 
-    useEffect(()=> {
-        const user = getLocalStorage();
-        if(user){
-            setUser(user);
-            console.log('Usuario logado',user);
+    useEffect(() => {
+        const storedUser = getLocalStorage();
+        if (storedUser) {
+            setUser(storedUser);
+            console.log("Usuário logado", storedUser);
         }
-    },[]);
+    }, []);
 
     async function authenticate(email, password) {
-        Api.post('/session',{email, password})
-        .then((response)=>{
-            if(!response.data.error === true){
-                toast(response.data.message);
+        try {
+            const response = await Api.post("/session", { email, password });
+
+            // Verificar explicitamente o sucesso na resposta antes de prosseguir
+            if (response.data.error || !response.data.token) {
+                toast.error(response.data.message || "Credenciais inválidas");
+                return;
             }
-            const email = response.data.email;
-            const payload = { token:response.data.token, email}
+
+            const payload = {
+                token: response.data.token,
+                email: response.data.email,
+            };
+
             setUser(payload);
             setLocalStorage(payload);
-            window.location.href ="/perfil"
-        }).catch(()=>{
-            console.log('Erro: App Error');
-        });
+            toast.success("Login realizado com sucesso!");
+            window.location.href = "/perfil";
+        } catch (error) {
+            console.error("Erro na autenticação:", error);
+            toast.error("Erro ao fazer login. Tente novamente.");
+        }
     }
 
-    function logout(){
+    function logout() {
         setUser(null);
         setLocalStorage(null);
+        toast.info("Logout realizado com sucesso!");
     }
 
-
     return (
-        <AppContext.Provider value={{...user, authenticate, logout}}>
+        <AppContext.Provider value={{ user, authenticate, logout }}>
             {children}
         </AppContext.Provider>
-    )
-}
+    );
+};

@@ -18,18 +18,25 @@ const Cadastro = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    // Verificação de campos vazios
+    if (!data.name || !data.email || !data.password) {
+      toast.error("Todos os campos são obrigatórios!");
+      return;
+    }
+
     Api.post("/createusers", data)
       .then((response) => {
-        if (!response.data.error === true) {
-          toast(response.data.message);
+        if (!response.data.error) {
+          toast.success(response.data.message);
+          window.location.href = "/login";
         } else {
-          toast(response.data.message);
+          toast.error(response.data.message);
         }
       })
       .catch(() => {
-        console.log("error: erro no sistema");
+        toast.error("Erro no sistema, tente novamente.");
       });
-    // console.log(data);
   };
 
   return (

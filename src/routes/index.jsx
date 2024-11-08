@@ -1,10 +1,10 @@
 import React from "react";
 import  Home  from "../pages/Home";
 import {
-    BrowserRouter,
-    Routes,
+    BrowserRouter as Router,
+    Switch,
     Route
-}from "react-router-dom"
+}from 'react-router-dom'
 import  Header  from "../components/Header";
 import Footer from "../components/Footer";
 import Error from "../pages/Error";
@@ -12,21 +12,22 @@ import Imobi from "../pages/Imobi";
 import Login from "../pages/Login";
 import Cadastro from "../pages/Cadastro";
 import Perfil from "../pages/Perfil";
+import PrivateRoute from "../components/PrivateRoute";
 
 const RouterApp = ()=>{
     return(
-        <BrowserRouter>
+        <Router>
         <Header/>
-            <Routes>
-                <Route path="/" element={<Home/>}/>
-                <Route path="/imovel" element={<Imobi/>}/>
-                <Route path="/login" element={<Login/>}/>
-                <Route path="/cadastro" element={<Cadastro/>}/>
-                <Route path="/perfil" element={<Perfil/>}/>
-                <Route path="*" element={<Error/>}/>
-            </Routes>
+            <Switch>
+                <Route path="/" exact component={Home}/>
+                <Route path="/imovel" component={Imobi}/>
+                <Route path="/login" component={Login}/>
+                <Route path="/cadastro" component={Cadastro}/>
+                <PrivateRoute path="/perfil" component={Perfil}/>
+                <Route path="*" component={Error}/>
+            </Switch>
             <Footer/>
-        </BrowserRouter>
+        </Router>
     )
 }
 

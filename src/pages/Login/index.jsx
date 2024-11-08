@@ -6,22 +6,22 @@ import { AppAuth } from "../../context/AppAuth";
 
 const Login = () => {
     const auth = AppAuth();
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
+    const [email, setEmail] = useState();
+    const [password, setPassword] = useState();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        await auth.authenticate(email, password);
+        // if (!auth || typeof auth.authenticate !== "function") {
+        //     console.error("Erro: função authenticate não disponível.");
+        //     return;
+        // }
         
-        if (!auth || typeof auth.authenticate !== "function") {
-            console.error("Erro: função authenticate não disponível.");
-            return;
-        }
-        
-        try {
-            await auth.authenticate(email, password);
-        } catch (error) {
-            console.error("Erro ao fazer login:", error);
-        }
+        // try {
+        //     await auth.authenticate(email, password);
+        // } catch (error) {
+        //     console.error("Erro ao fazer login:", error);
+        // }
     };
 
     return (
@@ -29,13 +29,12 @@ const Login = () => {
             <h2>Acesse sua Conta</h2>
             <p>Entre com seu E-mail e Senha</p>
             <ContainerForm>
-                <Form onSubmit={handleSubmit}>
+                <Form onSubmit={handleSubmit} autoComplete="off">
                     <Label>E-mail</Label>
                     <Input
-                        type="email"
+                        type="text"
                         name="email"
                         placeholder="Informe seu E-mail"
-                        value={email}
                         onChange={(e) => setEmail(e.target.value)}
                     />
                     <Label>Senha</Label>
@@ -43,7 +42,6 @@ const Login = () => {
                         type="password"
                         name="password"
                         placeholder="Informe sua Senha"
-                        value={password}
                         onChange={(e) => setPassword(e.target.value)}
                     />
                     <Button type="submit">Fazer Login</Button>

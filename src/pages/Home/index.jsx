@@ -1,13 +1,22 @@
-import React,{Fragment} from "react";
+import React,{Fragment, useEffect, useState} from "react";
 import { Header, Wrapper } from "./styles";
 import Card from "../../components/Card";
 import Banner from "../../components/Banner";
+import Api from "../../services/Api";
 
 const Home = ()=>{
-    let Cards = [];
-    for(let i = 0; i<4; i++){
-        Cards.push(<Card key={i}/>)
-    }
+
+const [imobi, setImobi] = useState([]);
+useEffect(()=>{
+    Api.get('/listimobi')
+    .then((response)=>{
+        setImobi(response.data);
+    })
+    .catch(()=>{
+        console.log('Error: Erro no Sistema')
+    });
+},[])
+    
     return(
         <Fragment>
             <Banner/>
@@ -15,7 +24,16 @@ const Home = ()=>{
                 <h2>Find the property of your Dreams</h2>
             </Header>
             <Wrapper>
-                {Cards}
+                {imobi.map(itens => (
+                    <Card
+                     key={itens.id} 
+                     thumb={itens.thumb}
+                     tipo={itens.tipo}
+                     endereco={itens.endereco}
+                     valor={itens.valor}
+                     slug={itens.slug}
+                     />
+                ))}
             </Wrapper>
         </Fragment>
     )

@@ -20,7 +20,7 @@ const RouterApp = ()=>{
         <Header/>
             <Switch>
                 <Route path="/" exact component={Home}/>
-                <Route path="/imovel" component={Imobi}/>
+                <Route path="/imovel/:slug" component={Imobi}/>
                 <Route path="/login" component={Login}/>
                 <Route path="/cadastro" component={Cadastro}/>
                 <PrivateRoute path="/perfil" component={Perfil}/>
